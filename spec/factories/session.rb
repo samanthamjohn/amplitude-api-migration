@@ -1,4 +1,5 @@
 FactoryGirl.define do
-  events { create(:event
+  factory :session do
 
+  end
 end

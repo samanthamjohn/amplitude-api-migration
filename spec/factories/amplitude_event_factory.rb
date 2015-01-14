@@ -1,7 +1,7 @@
 FactoryGirl.define do
-  factory :amplitude_event do
+  factory :event, class: AmplitudeEvent do
     event_type "viewed_stream"
     time { Time.now }
-    context
+    context context
   end
 end

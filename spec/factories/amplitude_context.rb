@@ -7,5 +7,19 @@ FactoryGirl.define do
     device_model "ipad4,2"
     device_manufacturer "Apple"
     carrier "AT&T"
+
+    skip_create
+
+    initialize_with{ new(
+    {
+      "idForVendor" => device_id,
+      "appVersion" => app_version,
+      "osName" => os_name,
+      "osVersion" => os_version,
+      "deviceModel" => device_model,
+      "deviceManufacturer" => device_manufacturer,
+      "carrier" => carrier
+    }
+    ) }
   end
 end

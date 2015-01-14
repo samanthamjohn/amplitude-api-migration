@@ -19,7 +19,7 @@ class AmplitudeEvent
   end
 
   def should_be_imported?
-    allowed_event_types.include?(event_type) && time.present?
+    allowed_event_types.include?(event_type) && time.present? && context.should_be_imported?
   end
 
   def allowed_event_types

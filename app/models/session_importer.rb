@@ -9,12 +9,15 @@ class SessionImporter
   end
 
   def make_api_requests(slice_size=250)
+    success = true
     events.each_slice(slice_size) do |events|
       result = `#{amplitude_curl_string(events)}`
       if result != "success"
+        success = false
         FailedImport.create(events: events, error_string: result)
       end
     end
+    success
   end
 
 

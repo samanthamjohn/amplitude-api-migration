@@ -2,7 +2,7 @@ class AnalyticLog < ActiveRecord::Base
   validates :s3_object_key, uniqueness: true
 
   def self.import_data_to_amplitude
-    order("sort_order ASC").each do |analytic_log|
+    where("successful_import IS NOT TRUE").order("sort_order ASC").each do |analytic_log|
       analytic_log.delay(priority: analytic_log.sort_order).import_data_from_file
     end
   end
@@ -14,7 +14,9 @@ class AnalyticLog < ActiveRecord::Base
 
   def import_data_from_file
     session_importer = SessionImporter.new(data["logs"])
-    session_importer.make_api_requests
+    if session_importer.make_api_requests
+      self.update_attribute(:successful_import, true)
+    end
   end
 
   def filename

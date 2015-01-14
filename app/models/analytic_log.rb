@@ -13,13 +13,16 @@ class AnalyticLog < ActiveRecord::Base
   end
 
   def import_data_from_file
-    data = JSON.parse(data_string)
     session_importer = SessionImporter.new(data["logs"])
     session_importer.make_api_requests
   end
 
   def filename
     "tmp/#{s3_object_key.gsub("/", "_")}"
+  end
+
+  def data
+    JSON.parse(data_string)
   end
 
   def data_string
@@ -30,11 +33,12 @@ class AnalyticLog < ActiveRecord::Base
   def read_local_file_and_delete
     file = File.open(filename, "r")
     gz = Zlib::GzipReader.new(file)
-    file.close
+    data = gz.read
 
+    file.close
     File.delete(file)
 
-    gz.read
+    data
   end
 
   def write_file_locally

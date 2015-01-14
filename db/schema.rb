@@ -11,11 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150113163409) do
+ActiveRecord::Schema.define(version: 20150114201519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+
+  create_table "analytic_logs", force: :cascade do |t|
+    t.integer  "sort_order"
+    t.string   "s3_object_key"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "failed_imports", force: :cascade do |t|
     t.hstore   "events"

@@ -19,8 +19,7 @@ class AnalyticLog < ActiveRecord::Base
   end
 
   def filename
-    s3_object_key.gsub("/", "_")
-
+    "tmp/#{s3_object_key.gsub("/", "_")}"
   end
 
   def data_string

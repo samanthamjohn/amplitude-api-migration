@@ -24,7 +24,7 @@ class SessionImporter
   end
 
   def api_key
-     "bdaa7081756b762776b996abfc8400fc"
+     ENV["AMPLITUDE_API_KEY"]
   end
 
   def amplitude_curl_string(events)

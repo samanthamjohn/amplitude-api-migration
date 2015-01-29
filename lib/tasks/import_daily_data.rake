@@ -16,5 +16,5 @@ task import_daily_data: :environment do
     end
   end
 
-  AnalyticLog.import_daily_data
+  AnalyticLog.import_data_to_amplitude
 end

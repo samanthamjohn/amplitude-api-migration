@@ -7,7 +7,7 @@ task import_daily_data: :environment do
 
   (-1..1).each do |day|
     now = DateTime.now + day.days
-    date = now.strftime("%Y/%m/%-d")
+    date = now.strftime("%Y/%m/%d")
     bucket.objects.with_prefix("production/#{date}").each do |o|
       if o.key.match("log")
         AnalyticLog.create(sort_order: index, s3_object_key: o.key)

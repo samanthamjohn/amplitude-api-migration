@@ -1,8 +1,9 @@
 class AnalyticLog < ActiveRecord::Base
   validates :s3_object_key, uniqueness: true
 
+  scope :not_imported, -> { where("successful_import IS NOT TRUE").order("sort_order ASC") }
   def self.import_data_to_amplitude
-    where("successful_import IS NOT TRUE").order("sort_order ASC").each do |analytic_log|
+   not_imported.each do |analytic_log|
       analytic_log.delay(priority: analytic_log.sort_order).import_data_from_file
     end
   end
